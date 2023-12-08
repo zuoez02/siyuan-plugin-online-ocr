@@ -1,14 +1,10 @@
 <script lang="ts">
   import { adaptHotkey } from "siyuan";
-  import { Job, JobType } from "@/types/job";
+  import { Job } from "@/types/job";
   import OnlineOcrPlugin from "..";
   import { ExtendedArray } from "@/utils";
   import { onMount } from "svelte";
   import JobComponent from './job.svelte';
-
-  const addJob = () => {
-    plugin.createJob("123", JobType.IMAGE_URL);
-  };
 
   let _jobs = [];
 
@@ -51,9 +47,8 @@
     >
   </div>
   <div class="fn__flex-1">
-    <div><button on:click={addJob}>ffff</button></div>
     {#each _jobs as job}
-      <JobComponent bind:job={job}></JobComponent>
+      <JobComponent bind:job={job} bind:plugin></JobComponent>
     {/each}
   </div>
 </div>
