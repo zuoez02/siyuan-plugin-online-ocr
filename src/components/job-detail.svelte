@@ -2,8 +2,12 @@
   import { onMount } from "svelte";
   import OnlineOcrPlugin from "..";
   import { Job } from "@/types/job";
+  import { Menu, showMessage } from "siyuan";
 
-  let svg;
+  let svg: SVGElement;
+
+  let menuOpen = false;
+  let menu;
 
   onMount(() => {
     const rect = svg.getBoundingClientRect();
@@ -26,8 +30,39 @@
         rect.setAttribute("stroke-width", `1`);
         rect.setAttribute("stroke", `#ffff00`);
         rect.setAttribute("title", line.text);
+        rect.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          svg.querySelectorAll('rect').forEach((e) => e.classList.remove('selected'));
+          if (menuOpen) {
+            menuOpen = false;
+            menu.close();
+            return;
+          }
+          (e.target as SVGRectElement).classList.add('selected');
+          menuOpen = true;
+          const m = new Menu('onlineOcrDetailClick', () => {
+            (e.target as SVGRectElement).classList.remove('selected');
+          });
+          m.addItem({
+            label: (e.target as SVGRectElement).getAttribute('title'),
+            icon: 'iconCopy',
+            click: () => {
+              const title = (e.target as SVGRectElement).getAttribute('title');
+              navigator.clipboard.writeText(title);
+              showMessage('Copied: ' + title);
+            },
+          });
+          m.open({
+            x: e.clientX,
+            y: e.clientY,
+          });
+          menu = m;
+        });
         svg.appendChild(rect);
       });
+
+      
     });
   });
 
