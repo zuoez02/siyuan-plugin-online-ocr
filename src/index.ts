@@ -23,7 +23,9 @@ export default class OnlineOcrPlugin extends Plugin {
     jobs: ExtendedArray<Job> = new ExtendedArray();
 
     onload() {
-        this.settingUtils = new SettingUtils(this, 'config');
+        this.settingUtils = new SettingUtils(this, 'config', (data) => {
+            this.jobScheduler.reloadConfig(data);
+        });
         this.settingUtils.addItem({
             key: "ocrProvider",
             value: JobProvider.AZURE,
@@ -174,7 +176,7 @@ export default class OnlineOcrPlugin extends Plugin {
         console.log(job, i);
         if (i >= 0) {
             this.jobs.splice(i, 1);
-            this.jobs.dispatch('update');
+            this.jobs.dispatch('check');
         }
     }
 }
