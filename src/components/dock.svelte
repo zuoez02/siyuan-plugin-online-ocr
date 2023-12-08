@@ -1,0 +1,59 @@
+<script lang="ts">
+  import { adaptHotkey } from "siyuan";
+  import { Job, JobType } from "@/types/job";
+  import OnlineOcrPlugin from "..";
+  import { ExtendedArray } from "@/utils";
+  import { onMount } from "svelte";
+  import JobComponent from './job.svelte';
+
+  const addJob = () => {
+    plugin.createJob("123", JobType.IMAGE_URL);
+  };
+
+  let _jobs = [];
+
+  onMount(() => {
+    _jobs = [...jobs].reverse();
+
+    jobs.on("update", () => {
+      _jobs = [...jobs].reverse();
+    });
+    jobs.on("check", () => {
+      _jobs = [...jobs].reverse();
+    });
+  });
+
+  export let plugin: OnlineOcrPlugin;
+  export let jobs: ExtendedArray<Job>;
+</script>
+
+<div class="fn__flex-1 fn__flex-column plugin-online-ocr-dock">
+  <div class="block__icons">
+    <div class="block__logo">
+      <svg><use xlink:href="#iconOnlineOcr"></use></svg>
+      Online OCR
+    </div>
+    <span class="fn__flex-1 fn__space"></span>
+    <span
+      data-type="min"
+      class="block__icon b3-tooltips b3-tooltips__sw"
+      aria-label="Min ${adaptHotkey('⌘W')}"
+      ><svg><use xlink:href="#iconMin"></use></svg></span
+    >
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <span
+      on:click={() => plugin.openSetting()}
+      id="setting"
+      data-type="setting"
+      class="block__icon b3-tooltips b3-tooltips__sw"
+      aria-label="Setting"
+      ><svg><use xlink:href="#iconSettings"></use></svg></span
+    >
+  </div>
+  <div class="fn__flex-1">
+    <div><button on:click={addJob}>ffff</button></div>
+    {#each _jobs as job}
+      <JobComponent bind:job={job}></JobComponent>
+    {/each}
+  </div>
+</div>
