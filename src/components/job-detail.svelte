@@ -10,8 +10,6 @@
   let menu;
 
   onMount(() => {
-    const rect = svg.getBoundingClientRect();
-    console.log(rect);
     const result = job.jobResult.raw;
     result.analyzeResult.readResults.forEach((res) => {
       svg.setAttribute("viewBox", `0 0 ${res.width} ${res.height}`);
@@ -50,7 +48,7 @@
             click: () => {
               const title = (e.target as SVGRectElement).getAttribute('title');
               navigator.clipboard.writeText(title);
-              showMessage('Copied: ' + title);
+              showMessage(plugin.i18n.copied + title);
             },
           });
           m.open({

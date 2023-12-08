@@ -4,8 +4,13 @@ export interface Job {
     jobStatus: JobStatus;
     jobType: JobType,
     jobImage: string;
-    jobResult: any;
+    jobResult: Result;
     jobProvier: JobProvider;
+}
+
+export interface Result {
+    raw?: any;
+    text: string;
 }
 
 export enum JobProvider {

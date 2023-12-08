@@ -15,7 +15,7 @@
   ],
   "displayName": {
     "en_US": "Online OCR",
-    "zh_CN": "在线OCR插件"
+    "zh_CN": "在线图片文字识别(OCR)"
   },
   "description": {
     "en_US": "Support use online ocr api to analyze pictures and docs",

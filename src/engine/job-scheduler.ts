@@ -3,6 +3,7 @@ import { Provider } from "@/providers/provider";
 import { Job, JobProvider, JobStatus } from "@/types/job";
 import { PluginConfig } from "@/types/setting";
 import { ExtendedArray, sleep } from "@/utils";
+import OnlineOcrPlugin from "..";
 
 export class JobScheduler {
     private loop = true;
@@ -11,7 +12,7 @@ export class JobScheduler {
     private interval = 500;
     private providers = new Map<JobProvider, Provider>();
 
-    constructor(private jobs: ExtendedArray<Job>, private config: PluginConfig) {
+    constructor(private jobs: ExtendedArray<Job>, private config: PluginConfig, private plugin: OnlineOcrPlugin) {
         console.log(JSON.stringify(config))
     }
 
@@ -74,7 +75,7 @@ export class JobScheduler {
         }
         if (p === JobProvider.AZURE) {
             console.log(this.config);
-            this.providers.set(p, new AzureProvider(this.config));
+            this.providers.set(p, new AzureProvider(this.config, this.plugin));
         }
         return this.providers.get(p);
     }

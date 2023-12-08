@@ -2,13 +2,14 @@ import { Job, JobProvider, JobStatus, JobType } from "@/types/job";
 import { Provider } from "./provider";
 import { AzureProviderSetting } from "@/types/azure";
 import { sleep } from "@/utils";
+import OnlineOcrPlugin from "..";
 
 export class AzureProvider extends Provider {
     name = JobProvider.AZURE;
 
     declare setting: AzureProviderSetting;
 
-    constructor(setting: AzureProviderSetting) {
+    constructor(setting: AzureProviderSetting, private plugin: OnlineOcrPlugin) {
         super();
         this.setting = setting;
     }
@@ -16,7 +17,9 @@ export class AzureProvider extends Provider {
     async runJob(job: Job): Promise<void> {
         if (!this.setting?.azureEndpoint || !this.setting?.azureServiceKey) {
             job.jobStatus = JobStatus.FAILED;
-            job.jobResult = "Azure Endpoint or service key not configured!";
+            job.jobResult = {
+                text: this.plugin.i18n.azureNotConfigured,
+            };
             return;
         }
         if (job.jobType === JobType.IMAGE_URL) {
@@ -38,7 +41,9 @@ export class AzureProvider extends Provider {
                     }
                 } else {
                     job.jobStatus = JobStatus.FAILED;
-                    job.jobResult = JSON.stringify({ text: 'Unknown' })
+                    job.jobResult = {
+                        text: this.plugin.i18n.unknownError,
+                    };
                 }
             } catch (e) {
                 job.jobStatus = JobStatus.FAILED;
@@ -46,7 +51,9 @@ export class AzureProvider extends Provider {
             }
         } else {
             job.jobStatus = JobStatus.FAILED;
-            job.jobResult = JSON.stringify({ text: 'Unknown' })
+                    job.jobResult = {
+                        text: this.plugin.i18n.unknownError,
+                    };
             return;
         }
     }
