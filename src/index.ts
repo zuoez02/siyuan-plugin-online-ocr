@@ -18,6 +18,9 @@ export default class OnlineOcrPlugin extends Plugin {
         maxJobsConcurrence: 5,
         maxJobsHistory: 20,
         autoAddAfterImage: false,
+        baiduApiKey: '',
+        baiduSecretKey: '',
+        baiduHighAccurate: false,
     };
 
     jobs: ExtendedArray<Job> = new ExtendedArray();
@@ -36,6 +39,7 @@ export default class OnlineOcrPlugin extends Plugin {
             description: this.i18n.ocrProviderDesc,
             options: {
                 [JobProvider.AZURE]: 'Azure',
+                [JobProvider.BAIDU]: 'Baidu',
             }
         });
         this.settingUtils.addItem({
@@ -82,6 +86,27 @@ export default class OnlineOcrPlugin extends Plugin {
             type: "checkbox",
             title: this.i18n.autoAddAfterImage,
             description: this.i18n.autoAddAfterImageDesc,
+        });
+        this.settingUtils.addItem({
+            key: "baiduApiKey",
+            value: '',
+            type: "textinput",
+            title: this.i18n.baiduApiKey,
+            description: this.i18n.baiduApiKeyDesc,
+        });
+        this.settingUtils.addItem({
+            key: "baiduSecretKey",
+            value: '',
+            type: "textinput",
+            title: this.i18n.baiduSecretKey,
+            description: this.i18n.baiduSecretKeyDesc,
+        });
+        this.settingUtils.addItem({
+            key: "baiduHighAccurate",
+            value: false,
+            type: "checkbox",
+            title: this.i18n.baiduHighAccurate,
+            description: this.i18n.baiduHighAccurateDesc,
         });
 
         this.eventBus.on('open-menu-image', (e) => {

@@ -1,4 +1,5 @@
 import { AzureProvider } from "@/providers/azure-provider";
+import { BaiduProvider } from '@/providers/baidu-provider';
 import { Provider } from "@/providers/provider";
 import { Job, JobProvider, JobStatus } from "@/types/job";
 import { PluginConfig } from "@/types/setting";
@@ -76,6 +77,8 @@ export class JobScheduler {
         if (p === JobProvider.AZURE) {
             console.log(this.config);
             this.providers.set(p, new AzureProvider(this.config, this.plugin));
+        } else if (p === JobProvider.BAIDU) {
+            this.providers.set(p, new BaiduProvider(this.config, this.plugin));
         }
         return this.providers.get(p);
     }

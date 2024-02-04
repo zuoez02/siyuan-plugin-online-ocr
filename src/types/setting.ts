@@ -7,4 +7,7 @@ export interface PluginConfig {
     maxJobsConcurrence: number;
     maxJobsHistory: number;
     autoAddAfterImage: boolean;
+    baiduApiKey: string;
+    baiduSecretKey: string;
+    baiduHighAccurate: boolean;
 }

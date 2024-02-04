@@ -26,7 +26,7 @@
 <div class="fn__flex-1 fn__flex-column plugin-online-ocr-dock">
   <div class="block__icons">
     <div class="block__logo">
-      <svg><use xlink:href="#iconOnlineOcr"></use></svg>
+      <svg class="block__logoicon"><use xlink:href="#iconOnlineOcr"></use></svg>
       {plugin.i18n.title}
     </div>
     <span class="fn__flex-1 fn__space"></span>

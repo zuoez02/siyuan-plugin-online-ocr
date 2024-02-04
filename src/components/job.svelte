@@ -83,6 +83,7 @@
   {#if job.jobResult}
     <div class="job-result">
       <span class="job-result-buttons">
+        {#if job.jobResult.raw}
         <span
           class="b3-tooltips b3-tooltips__e job-result-button"
           aria-label={plugin.i18n.openDetail}
@@ -90,6 +91,7 @@
         >
           <svg><use xlink:href="#iconZoomIn"></use></svg>
         </span>
+        {/if}
         <span
           class="b3-tooltips b3-tooltips__e job-result-button"
           aria-label={plugin.i18n.copyContent}

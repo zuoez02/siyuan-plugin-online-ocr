@@ -15,6 +15,7 @@ export interface Result {
 
 export enum JobProvider {
     AZURE = 'azure',
+    BAIDU = 'baidu',
 }
 
 export enum JobType {
