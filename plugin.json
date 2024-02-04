@@ -2,7 +2,7 @@
   "name": "siyuan-plugin-online-ocr",
   "author": "zuoez02",
   "url": "https://github.com/zuoez02/siyuan-plugin-online-ocr",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "minAppVersion": "2.10.14",
   "backends": [
     "windows",
@@ -19,7 +19,7 @@
   },
   "description": {
     "en_US": "Support use online ocr api to analyze pictures and docs",
-    "zh_CN": "使用在线OCR接口解析图片与文档"
+    "zh_CN": "使用在线OCR接口解析图片与文档, 支持Azure API和Baidu OCR API"
   },
   "readme": {
     "en_US": "README.md",

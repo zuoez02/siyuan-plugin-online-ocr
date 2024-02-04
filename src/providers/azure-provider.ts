@@ -22,6 +22,11 @@ export class AzureProvider extends Provider {
             };
             return;
         }
+        job.config = {
+            azureEndpoint: this.setting.azureEndpoint,
+            azureServiceKey: this.setting.azureServiceKey,
+            ocrProvider: JobProvider.AZURE,
+        }
         if (job.jobType === JobType.IMAGE_URL) {
             try {
                 const img =  await this.getImageFromUrl(job.jobImage);

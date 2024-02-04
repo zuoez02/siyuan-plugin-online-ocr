@@ -3,6 +3,7 @@ import { Provider } from "./provider";
 import { BaiduProviderSetting } from "@/types/baidu";
 import OnlineOcrPlugin from "..";
 import { DetailBox } from "@/types/detail";
+import { getImageSizeFromBlob } from "@/utils";
 
 export class BaiduProvider extends Provider {
     name = JobProvider.BAIDU;
@@ -24,6 +25,12 @@ export class BaiduProvider extends Provider {
             };
             return;
         }
+        job.config = {
+            baiduApiKey: this.setting.baiduApiKey,
+            baiduHighAccurate: this.setting.baiduHighAccurate,
+            baiduSecretKey: this.setting.baiduSecretKey,
+            ocrProvider: JobProvider.BAIDU,
+        }
         if (!this.access_token) {
             await this.getAccessToken();
         }
@@ -34,6 +41,9 @@ export class BaiduProvider extends Provider {
             image = await this.getBase64FromURL(job.jobImage);
         }
 
+        const { width, height } = await getImageSizeFromBlob(image);
+        job.imageWidth = width;
+        job.imageHeight = height;
 
         try {
             const result = await this.requestImage(image, this.setting.baiduHighAccurate);

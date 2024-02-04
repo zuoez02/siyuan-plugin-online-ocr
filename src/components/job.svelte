@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { Job, JobStatus, JobType } from "@/types/job";
+  import { Job, JobProvider, JobStatus, JobType } from "@/types/job";
   import { Dialog, openTab, showMessage } from "siyuan";
   import OnlineOcrPlugin from "..";
-  import JobDetail from "./job-detail.svelte";
+  import AzureJobDetail from "./azure-job-detail.svelte";
+  import BaiduJobDetail from "./baidu-job-detail.svelte";
 
   const getLink = (job: Job) => {
     switch (job.jobStatus) {
@@ -46,13 +47,19 @@
   };
 
   const showDetail = () => {
+    let component;
+    if (job.jobProvier === JobProvider.AZURE) {
+      component = AzureJobDetail;
+    } else {
+      component = BaiduJobDetail;
+    }
     const dialog = new Dialog({
-      title: plugin.i18n.jobDetail,
+      title: plugin.i18n.jobDetail + " - " + job.jobProvier,
       content: '<div id="job-detail-container"></div>',
       disableAnimation: true,
     });
 
-    new JobDetail({
+    new component({
       target: dialog.element.querySelector("#job-detail-container"),
       props: {
         plugin,

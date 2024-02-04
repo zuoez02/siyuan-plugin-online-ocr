@@ -1,3 +1,5 @@
+import { PluginConfig } from "./setting";
+
 export interface Job {
     jobName: string;
     jobDate: number;
@@ -6,6 +8,9 @@ export interface Job {
     jobImage: string;
     jobResult: Result;
     jobProvier: JobProvider;
+    imageWidth?: number;
+    imageHeight?: number;
+    config: Partial<PluginConfig>;
 }
 
 export interface Result {
